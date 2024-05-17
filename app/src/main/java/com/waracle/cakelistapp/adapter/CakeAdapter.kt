@@ -18,7 +18,6 @@ class CakeAdapter (private val onItemClick: (Cake) -> Unit)  : RecyclerView.Adap
     inner class CakeViewHolder(private val binding: ItemCakeBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(cake: Cake) {
             binding.titleTextView.text = cake.title
-            binding.descTextView.text = cake.desc
             Glide.with(binding.root.context)
                 .load(cake.image)
                 .into(binding.cakeImageView)
