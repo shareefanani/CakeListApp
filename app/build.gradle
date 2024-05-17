@@ -50,6 +50,7 @@ dependencies {
     implementation libs.okhttp.logging.interceptor
     implementation libs.glide
     implementation libs.glide.compiler
+    implementation libs.androidx.swiperefreshlayout
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit

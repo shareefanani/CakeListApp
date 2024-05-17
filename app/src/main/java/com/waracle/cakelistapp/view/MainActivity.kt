@@ -27,9 +27,14 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
 
-        viewModel.observeCakeLiveData().observe(this, Observer { movieList ->
-            adapter.setCakeList(movieList)
+        viewModel.observeCakeLiveData().observe(this, Observer { cakeList ->
+            adapter.setCakeList(cakeList)
+            binding.swipeRefreshLayout.isRefreshing = false
         })
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.fetchCakes()
+        }
     }
     private fun showDescriptionDialog(cake: Cake) {
         val dialog = AlertDialog.Builder(this)
