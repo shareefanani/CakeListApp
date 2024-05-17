@@ -3,6 +3,7 @@ package com.waracle.cakelistapp.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.waracle.cakelistapp.databinding.ItemCakeBinding
 import com.waracle.cakelistapp.model.Cake
 
@@ -18,6 +19,9 @@ class CakeAdapter : RecyclerView.Adapter<CakeAdapter.CakeViewHolder>() {
         fun bind(cake: Cake) {
             binding.titleTextView.text = cake.title
             binding.descTextView.text = cake.desc
+            Glide.with(binding.root.context)
+                .load(cake.image)
+                .into(binding.cakeImageView)
         }
     }
 
