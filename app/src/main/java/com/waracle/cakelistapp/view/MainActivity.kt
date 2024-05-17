@@ -1,19 +1,33 @@
 package com.waracle.cakelistapp.view
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.ViewModelProvider
+import com.waracle.cakelistapp.adapter.CakeAdapter
 import com.waracle.cakelistapp.databinding.ActivityMainBinding
+import com.waracle.cakelistapp.viewmodel.CakeViewModel
 
 class MainActivity : AppCompatActivity() {
+    lateinit var viewModel: CakeViewModel
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = ViewModelProvider(this)[CakeViewModel::class.java]
+        viewModel.fetchCakes()
+
+        val adapter = CakeAdapter()
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = adapter
+
+        viewModel.observeCakeLiveData().observe(this, Observer { movieList ->
+            adapter.setCakeList(movieList)
+        })
     }
+
 }
