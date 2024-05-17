@@ -13,6 +13,10 @@ class CakeViewModel : ViewModel() {
     val cakesLiveData: MutableLiveData<List<Cake>> = MutableLiveData()
     private val repository = CakeRepository()
 
+
+    private val _errorLiveData = MutableLiveData<String>()
+    val errorLiveData: LiveData<String> get() = _errorLiveData
+
     fun fetchCakes() {
         repository.getCakes().enqueue(object : Callback<List<Cake>> {
             override fun onResponse(call: Call<List<Cake>>, response: Response<List<Cake>>) {
@@ -29,11 +33,14 @@ class CakeViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<List<Cake>>, t: Throwable) {
-                // Handle failure
+                _errorLiveData.value = "Failed to load cakes: ${t.message}"
             }
         })
     }
     fun observeCakeLiveData() : LiveData<List<Cake>> {
         return cakesLiveData
+    }
+    fun observeErrorLiveData(): LiveData<String> {
+        return _errorLiveData
     }
 }

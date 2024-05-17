@@ -4,8 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.waracle.cakelistapp.adapter.CakeAdapter
 import com.waracle.cakelistapp.databinding.ActivityMainBinding
 import com.waracle.cakelistapp.model.Cake
@@ -30,6 +31,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.observeCakeLiveData().observe(this, Observer { cakeList ->
             adapter.setCakeList(cakeList)
             binding.swipeRefreshLayout.isRefreshing = false
+        })
+
+        viewModel.observeErrorLiveData().observe(this, Observer { errorMessage ->
+            binding.swipeRefreshLayout.isRefreshing = false
+            Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_SHORT).show()
         })
 
         binding.swipeRefreshLayout.setOnRefreshListener {
