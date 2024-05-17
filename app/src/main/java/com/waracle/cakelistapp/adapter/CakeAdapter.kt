@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.waracle.cakelistapp.databinding.ItemCakeBinding
 import com.waracle.cakelistapp.model.Cake
 
-class CakeAdapter : RecyclerView.Adapter<CakeAdapter.CakeViewHolder>() {
+class CakeAdapter (private val onItemClick: (Cake) -> Unit)  : RecyclerView.Adapter<CakeAdapter.CakeViewHolder>() {
     private var cakeList = ArrayList<Cake>()
 
     fun setCakeList(list : List<Cake>){
@@ -22,6 +22,7 @@ class CakeAdapter : RecyclerView.Adapter<CakeAdapter.CakeViewHolder>() {
             Glide.with(binding.root.context)
                 .load(cake.image)
                 .into(binding.cakeImageView)
+            itemView.setOnClickListener { onItemClick(cake) }
         }
     }
 
